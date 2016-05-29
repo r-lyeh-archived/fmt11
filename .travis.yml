@@ -1,0 +1,51 @@
+language: cpp
+sudo: required
+
+os:
+  - linux
+  - osx
+
+compiler:
+  - clang
+  - gcc
+
+addons:
+  apt:
+    sources:
+    - llvm-toolchain-precise-3.6
+    - ubuntu-toolchain-r-test
+    packages:
+    - clang-3.6
+    # Latest GCC for C++14
+    - gcc-5
+    - g++-5
+
+matrix:
+  allow_failures:
+    - compiler: clang
+    - os: osx
+
+before_install:
+  # Prepare compiler
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
+  - if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.6" CC="clang-3.6"; fi
+
+compiler:
+  - clang
+  - gcc
+
+install:
+# - wget --quiet -O - https://raw.githubusercontent.com/r-lyeh/depot/master/travis.pre.sh   | bash -x
+
+script:
+# Build and run the tests
+# - rm -rf "build" && mkdir "build" && cd "build" && cmake .. && cmake --build . && ctest
+- $CXX -v
+- for f in *.cxx;     do [ ! -e "$f" ] && echo || $CXX $f -I. -o ${f%.*}.bin -std=c++11 $(ls *.o) -DNDEBUG -O2 ; done
+- for f in *.bin;     do [ ! -e "$f" ] && echo || [[ ! $f == *"server"* ]] && [[ ! $f == *"bench"* ]] && echo simkeypresses | ./$f ; done
+
+notifications:
+  email: false
+
+cache:
+  - apt
