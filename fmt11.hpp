@@ -11,17 +11,24 @@
 // [x] Public domain.
 
 // ## Cons
-// - [ ] Probably slow. No recursive code, but some allocations remain still.
-// - [ ] Probably unsafe. No exhaustive bound checking is performed at all.
-// - [ ] Probably not full featured enough.
+// [ ] Probably slow. No recursive code, but some allocations remain still.
+// [ ] Probably unsafe. No exhaustive bound checking is performed at all.
+// [ ] Probably not full featured enough.
 
 // ## Alternatives
+// - https://github.com/apfeltee/cpp11-sprintf
 // - https://github.com/c42f/tinyformat
+// - https://github.com/d-led/fakeformat
+// - https://github.com/dbralir/print
 // - https://github.com/fmtlib/fmt
+// - https://github.com/kainjow/Mustache
+// - https://github.com/no1msd/mstch/
+// - https://github.com/rnlf/flossy
 // - https://github.com/seanmiddleditch/formatxx
 
 #ifndef FMT11_VERSION
-#define FMT11_VERSION "1.0.0" // (2016/05/29): Initial version
+#define FMT11_VERSION "1.0.1" /* (2016/05/31): Extra boundary checks
+#define FMT11_VERSION "1.0.0" // (2016/05/29): Initial version */
 
 #include <iomanip>
 #include <map>
@@ -51,7 +58,7 @@ inline std::string fmt11hlp( const Map *ctx, const char *format, Args... args) {
                         /**/ if( *in == '}' ) --lv, *o++ = *in++;
                         else if( *in == ':' ) g = fmt, *o++ = *in++;
                         else *( g ? g : m)++ = *o++ = *in++;
-                        if( (o - raw) >= 63 ) return 0;
+                        if( ((o - raw) >= 63) || ((m - tag) >= 31) || ( g && (g - fmt) >= 31 )) return 0;
                     } 
                     *o = *m = *(g ? g : fmt) = 0;
                     if( 0 != lv ) {

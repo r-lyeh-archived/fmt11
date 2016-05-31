@@ -30,8 +30,9 @@ Inspired by the better, safer and more featured library [fmtlib](https://github.
     fmt11( "Hello {0} {1}", "world", 123); // indices
     fmt11( "Hello {1} {0}", "world", 123); // indices: reordering
     fmt11( "{0}{1}{0}", "abra", "cad");    // indices: repeating
-    fmt11( "{:<20} {:>20}", "hello", "world");                // alignment
+    fmt11( "{0:x} {0:d} {0:o}", 42, 42, 42 );                 // formatting
     fmt11( "{0:.8.2} {1:;10.2} {0:!8.5}", 3.14159, 3.14159 ); // formatting
+    fmt11( "{:<20} {:>20}", "hello", "world");                // alignment
 
     // symbols and mustaches
     std::map< std::string, std::string > map { {"player1", "John"} };
@@ -39,4 +40,5 @@ Inspired by the better, safer and more featured library [fmtlib](https://github.
 ```
 
 ## Changelog
+- v1.0.1 (2016/05/31): Extra boundary checks
 - v1.0.0 (2016/05/29): Initial version
