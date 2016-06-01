@@ -40,5 +40,6 @@ Inspired by the better, safer and more featured library [fmtlib](https://github.
 ```
 
 ## Changelog
+- v1.0.2 (2016/06/01): Parse valid identifiers only
 - v1.0.1 (2016/05/31): Extra boundary checks
 - v1.0.0 (2016/05/29): Initial version

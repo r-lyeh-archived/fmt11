@@ -27,7 +27,8 @@
 // - https://github.com/seanmiddleditch/formatxx
 
 #ifndef FMT11_VERSION
-#define FMT11_VERSION "1.0.1" /* (2016/05/31): Extra boundary checks
+#define FMT11_VERSION "1.0.2" /* (2016/06/01): Parse valid identifiers only
+#define FMT11_VERSION "1.0.1" // (2016/05/31): Extra boundary checks
 #define FMT11_VERSION "1.0.0" // (2016/05/29): Initial version */
 
 #include <iomanip>
@@ -55,7 +56,9 @@ inline std::string fmt11hlp( const Map *ctx, const char *format, Args... args) {
                         if( (o - raw) >= 63 ) return 0;
                     }
                     while( *in && lv > 0 ) {
-                        /**/ if( *in == '}' ) --lv, *o++ = *in++;
+                        /**/ if( *in < 32 ) return 0;
+                        else if( *in < '0' && !g ) return 0;
+                        else if( *in == '}' ) --lv, *o++ = *in++;
                         else if( *in == ':' ) g = fmt, *o++ = *in++;
                         else *( g ? g : m)++ = *o++ = *in++;
                         if( ((o - raw) >= 63) || ((m - tag) >= 31) || ( g && (g - fmt) >= 31 )) return 0;
@@ -71,7 +74,7 @@ inline std::string fmt11hlp( const Map *ctx, const char *format, Args... args) {
                             double dbl = atof(input);
                             fix = int(dbl), dig = int(dbl * 1000 - fix * 1000);
                             while( dig && !(dig % 10) ) dig /= 10;
-                            // printf("%s <> %d %d\n", input, fix, dig );
+                            //printf("%s <> %d %d\n", input, fix, dig );
                             break;
                         }
                     }
@@ -222,6 +225,8 @@ int main() {
     TEST( fmt11("}}{"), "}}{" );         // mismatch
     TEST( fmt11("{}{"), "{}{" );         // mismatch
     TEST( fmt11("{}}"), "{}}" );         // mismatch
+    TEST( fmt11("{\t}", "hello"), "{\t}"); // invalid identifier
+    TEST( fmt11("{\"{0}\"}", "hello"), "{\"hello\"}"); // false positive \" is not part of an identifier
     TEST( fmt11( std::string(128, '{').c_str() ), std::string(128, '{') );  // buffer overflow
     TEST( fmt11( std::string(128, '}').c_str() ), std::string(128, '}') );  // buffer overflow
     TEST( fmt11("{{player1}}{{player2}}"), "{{player1}}{{player2}}" );      // missing map
