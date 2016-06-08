@@ -23,6 +23,7 @@ Inspired by the better, safer and more featured library [fmtlib](https://github.
 - https://github.com/dbralir/print
 - https://github.com/kainjow/Mustache
 - https://github.com/apfeltee/cpp11-sprintf
+- https://github.com/dbralir/print
 
 ## Showcase
 ```c++
