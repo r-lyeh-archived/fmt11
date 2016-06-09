@@ -14,16 +14,16 @@ Inspired by the better, safer and more featured library [fmtlib](https://github.
 - [ ] Probably not featured enough.
 
 ## Alternatives
+- https://github.com/apfeltee/cpp11-sprintf
 - https://github.com/c42f/tinyformat
-- https://github.com/fmtlib/fmt
-- https://github.com/seanmiddleditch/formatxx
 - https://github.com/d-led/fakeformat
+- https://github.com/dbralir/print
+- https://github.com/fmtlib/fmt
+- https://github.com/kainjow/Mustache
+- https://github.com/krig/k11
 - https://github.com/no1msd/mstch/
 - https://github.com/rnlf/flossy
-- https://github.com/dbralir/print
-- https://github.com/kainjow/Mustache
-- https://github.com/apfeltee/cpp11-sprintf
-- https://github.com/dbralir/print
+- https://github.com/seanmiddleditch/formatxx
 
 ## Showcase
 ```c++
