@@ -22,6 +22,7 @@ Inspired by the better, safer and more featured library [fmtlib](https://github.
 - https://github.com/kainjow/Mustache
 - https://github.com/krig/k11
 - https://github.com/no1msd/mstch/
+- https://github.com/panzi/formatstring
 - https://github.com/rnlf/flossy
 - https://github.com/seanmiddleditch/formatxx
 
